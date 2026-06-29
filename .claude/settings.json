@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git*)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(ls*)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(wc *)",
+      "Bash(cat *)",
+      "Bash(python3 *)",
+      "Bash(mkdir *)",
+      "Read(*)",
+      "Write(/home/user/Repos/arceus-core/*)",
+      "Edit(/home/user/Repos/arceus-core/*)"
+    ]
+  }
+}
