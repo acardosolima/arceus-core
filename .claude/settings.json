@@ -11,7 +11,7 @@
       "Bash(cat *)",
       "Bash(python3 *)",
       "Bash(mkdir *)",
-      "Read(*)",
+      "Read(/home/user/Repos/arceus-core/*)",
       "Write(/home/user/Repos/arceus-core/*)",
       "Edit(/home/user/Repos/arceus-core/*)"
     ]

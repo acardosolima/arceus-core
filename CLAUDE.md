@@ -25,6 +25,22 @@ Ao atualizar uma nota existente com nova informação:
 ## Língua
 Arceus core: Inglês (agnóstico). Vaults usam a língua do domínio.
 
+## Inbox Pattern
+
+Raw files to be processed go into `_inbox/`. The agent reads from there, extracts knowledge into notes, moves the file to `sources/`, and commits.
+
+```
+user drops file into _inbox/
+        ↓
+agent processes with prompts/ingest.md
+        ↓
+file moved to sources/ with canonical name
+        ↓
+notes created or merged → git commit
+```
+
+`_inbox/` contents are gitignored (only `.gitkeep` is tracked). This keeps raw inputs out of history while preserving traceability via commit messages and the ingestion log.
+
 ## Claude Code Permissions (required for every vault)
 
 Every vault based on arceus-core must have a `.claude/settings.json` with broad permissions. The agent will be editing markdowns constantly — prompting for approval on each edit is unnecessary friction.
@@ -33,10 +49,7 @@ When creating a new vault:
 1. Copy `templates/claude-settings.json` to `.claude/settings.json`
 2. Replace `VAULT_PATH` with the vault's absolute path (e.g. `/home/user/Repos/vault-my-project`)
 
-Permissions that must be allowed in any vault:
-- `Bash(git*)`, `Bash(cp *)`, `Bash(mv *)`, `Bash(ls*)`, `Bash(find *)`, `Bash(grep *)`, `Bash(wc *)`, `Bash(cat *)`, `Bash(python3 *)`, `Bash(mkdir *)`
-- `Read(*)` — read any file (needed to process external sources)
-- `Write(VAULT_PATH/*)` and `Edit(VAULT_PATH/*)` — writes scoped to the vault
+Read/Write/Edit are scoped to `VAULT_PATH` only — which already covers `_inbox/`, so no extra permissions are needed to process incoming files. Never use `Read(*)` — it exposes SSH keys, credentials, and other sensitive system files.
 
 ## Development Conventions
 - Use `git -C /home/user/Repos/arceus-core` instead of `cd` + git

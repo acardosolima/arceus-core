@@ -11,7 +11,7 @@
       "Bash(cat *)",
       "Bash(python3 *)",
       "Bash(mkdir *)",
-      "Read(*)",
+      "Read(VAULT_PATH/*)",
       "Write(VAULT_PATH/*)",
       "Edit(VAULT_PATH/*)"
     ]
