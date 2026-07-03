@@ -14,7 +14,7 @@ Merge rules (non-negotiable):
 3. **List fields** (`tags`, `sources`, `related`, etc.): deduplicate and append new items.
 4. **Body sections**: append new information under existing content. Do not rewrite paragraphs that are still accurate.
 5. **Conflicting information**: do not choose a side. Preserve the original and add the new version as `[Variation YYYY-MM-DD: <source>] <new version>`.
-6. Increment `schema_version` by 1.
+6. Increment `revision` by 1.
 7. Set `updated_at` to today's date.
 8. Add an entry to the `## History` section: `[YYYY-MM-DD | source: <source name>] <one-line summary of what changed>`.
 

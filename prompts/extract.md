@@ -28,7 +28,7 @@ title: ""
 tags: []
 created_at: "YYYY-MM-DD"
 updated_at: "YYYY-MM-DD"
-schema_version: 1
+revision: 1
 sources: []
 related: []
 ---

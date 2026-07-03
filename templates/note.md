@@ -4,7 +4,7 @@ title: ""           # Note title
 tags: []            # Free-form tags. e.g.: [foundry, ontology, legal, fiction]
 created_at: ""      # ISO 8601. e.g.: 2026-06-28
 updated_at: ""      # Updated on every MERGE
-schema_version: 1   # Increments on every MERGE
+revision: 1         # Increments on every MERGE
 
 # Connections
 sources: []         # What originated this note. e.g.: ["Meeting 2026-06-20", "[[Some Doc]]"]
