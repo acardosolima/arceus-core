@@ -1,3 +1,10 @@
 # Inbox — raw files staged for processing; only .gitkeep is tracked
 _inbox/*
 !_inbox/.gitkeep
+
+# Artifacts — on-demand deliverables (reports, task lists); disposable, never history
+_artifacts/*
+!_artifacts/.gitkeep
+
+# Python
+__pycache__/

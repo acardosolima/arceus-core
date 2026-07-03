@@ -2,18 +2,15 @@
   "permissions": {
     "allow": [
       "Bash(git*)",
-      "Bash(cp *)",
-      "Bash(mv *)",
       "Bash(ls*)",
       "Bash(find *)",
       "Bash(grep *)",
       "Bash(wc *)",
       "Bash(cat *)",
-      "Bash(python3 *)",
-      "Bash(mkdir *)",
-      "Read(VAULT_PATH/*)",
-      "Write(VAULT_PATH/*)",
-      "Edit(VAULT_PATH/*)"
+      "Bash(python3 _arceus/scripts/*)",
+      "Read(VAULT_PATH/**)",
+      "Write(VAULT_PATH/**)",
+      "Edit(VAULT_PATH/**)"
     ]
   }
 }
