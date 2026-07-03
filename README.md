@@ -16,6 +16,9 @@ Arceus defines the conventions, templates, and LLM prompts to capture, structure
 ```
 vault-<topic>/
 ├── _arceus/          ← this repo as a git submodule
+├── _inbox/           ← raw files waiting to be processed (gitignored)
+├── _artifacts/       ← on-demand deliverables: reports, task lists (gitignored)
+├── sources/          ← processed raw files, canonical names + _log.md
 ├── templates/        ← vault-specific templates (extend the base ones here)
 ├── prompts/          ← vault-specific prompts (extend the base ones here)
 ├── <topic-folder>/   ← notes organized however makes sense for the vault
@@ -29,10 +32,17 @@ vault-<topic>/
 
 ## Base prompts
 
-Two prompts cover all ingestion scenarios:
-
 - `prompts/extract.md` — creates a new note from any raw input (document, transcript, export, manual text)
 - `prompts/merge.md` — updates an existing note with new information **without deleting** what's already there
+- `prompts/ingest.md` — end-to-end workflow for processing an `_inbox/` file
+
+## Scripts
+
+Deterministic mechanics live in `scripts/` (Python, stdlib-only) so they never depend on an LLM: note scaffolding with safe ID assignment (`new_note.py`), inbox → sources moves with canonical naming and logging (`ingest_move.py`), and vault-wide frontmatter linting (`validate.py`). Run them from the vault root; see `CLAUDE.md` for the exact invocations.
+
+## Versioning
+
+Vaults pin an exact core commit through the submodule. Releases are tagged automatically from `CHANGELOG.md` by CI; each changelog entry carries the migration steps a vault must apply when it updates `_arceus/`. The update protocol is documented in `CLAUDE.md`.
 
 ## How to create a new vault
 
@@ -40,7 +50,12 @@ Two prompts cover all ingestion scenarios:
 git init vault-<topic>
 cd vault-<topic>
 git submodule add <arceus-core-url> _arceus
+mkdir -p _inbox _artifacts sources templates prompts .claude
+touch _inbox/.gitkeep _artifacts/.gitkeep
+cp _arceus/.gitignore .gitignore
 cp _arceus/templates/note.md templates/
 cp _arceus/prompts/* prompts/
+cp _arceus/templates/claude-settings.json .claude/settings.json
+# replace VAULT_PATH in .claude/settings.json with the vault's absolute path
 # extend templates and prompts for your domain
 ```

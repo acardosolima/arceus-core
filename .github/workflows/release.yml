@@ -1,0 +1,48 @@
+# Test + auto-tag on every push to the main branch.
+#
+# The tag version comes from the top entry of CHANGELOG.md, not from
+# commit-message parsing: the changelog has to be written anyway (it
+# carries the vault migration notes), so it is the single source of
+# truth and releasing = adding an entry. Pushes whose top version is
+# already tagged simply skip the tag step.
+name: release
+
+on:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run test suite
+        run: python3 -m unittest discover -s tests -v
+
+  tag:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history so existing tags are visible
+      - name: Tag from CHANGELOG.md
+        run: |
+          set -euo pipefail
+          version=$(grep -m1 -oE '^## [0-9]+\.[0-9]+\.[0-9]+' CHANGELOG.md | cut -d' ' -f2)
+          if [ -z "$version" ]; then
+            echo "no version found at the top of CHANGELOG.md" >&2
+            exit 1
+          fi
+          if git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
+            echo "v$version already tagged — nothing to do"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "v$version" -m "arceus-core v$version"
+          git push origin "v$version"
+          echo "tagged v$version"
