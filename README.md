@@ -59,3 +59,9 @@ cp _arceus/templates/claude-settings.json .claude/settings.json
 # replace VAULT_PATH in .claude/settings.json with the vault's absolute path
 # extend templates and prompts for your domain
 ```
+
+## License
+
+Copyright (C) 2026 Adriano Lima
+
+Arceus is free software, licensed under the [GNU GPL-3.0](LICENSE): use it, build vaults on it, fork it and improve it — but published derivatives must remain free under the same license and keep this copyright notice.

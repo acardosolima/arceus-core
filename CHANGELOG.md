@@ -15,6 +15,7 @@ The version at the top of this file is the source of truth for releases: the Git
 - `tests/` — unittest suite for the scripts (`python3 -m unittest discover -s tests`)
 - `.github/workflows/release.yml` — runs tests and auto-tags from this changelog on every push to main
 - `sources/_log.md` is now the defined ingestion log for every vault (created automatically by `ingest_move.py`)
+- `LICENSE` — GPL-3.0: free to use, attribution required, published derivatives must stay under the same license
 
 ### Changed
 - `schema_version` renamed to `revision` in the note template and prompts — it counts content merges, not schema changes
