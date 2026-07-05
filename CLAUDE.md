@@ -1,33 +1,34 @@
 # Arceus Core
 
-Engine genérica de gestão de conhecimento pessoal (PKM / second brain). Agnóstica de domínio.
+Generic personal knowledge management engine (PKM / second brain). Domain-agnostic.
 
-## O que é
-Notas Markdown com YAML frontmatter, estruturadas para consulta por qualquer LLM via RAG ou chat direto. Git-versionado. Pode ser usado para qualquer tema: projetos, livros, cursos, filmes.
+## What it is
+Markdown notes with YAML frontmatter, structured for querying by any LLM via RAG or direct chat. Git-versioned. Can be used for any subject: projects, books, courses, movies.
 
-## Estrutura
-- `templates/note.md` — template base de nota (campos YAML genéricos)
-- `prompts/extract.md` — prompt LLM para criar nova nota a partir de input bruto
-- `prompts/merge.md` — prompt LLM para atualizar nota existente sem apagar conteúdo
-- `prompts/ingest.md` — workflow de processamento de arquivos do `_inbox/`
-- `scripts/` — ferramentas determinísticas em Python (ver "Scripts")
-- `tests/` — suite de testes dos scripts (`python3 -m unittest discover -s tests`)
-- `CHANGELOG.md` — registro de versões e migrações de vault (fonte de verdade das releases)
+## Structure
+- `templates/note.md` — base note template (generic YAML fields)
+- `prompts/extract.md` — LLM prompt to create a new note from raw input
+- `prompts/merge.md` — LLM prompt to update an existing note without deleting content
+- `prompts/ingest.md` — workflow for processing files from `_inbox/`
+- `prompts/lint.md` — periodic semantic check of the vault (contradictions, orphan notes, missing-note concepts, stale claims)
+- `scripts/` — deterministic Python tools (see "Scripts")
+- `tests/` — test suite for the scripts (`python3 -m unittest discover -s tests`)
+- `CHANGELOG.md` — version history and vault migrations (source of truth for releases)
 
-## Padrão de Vault
-Cada vault é um repositório Git separado que inclui arceus-core como git submodule em `_arceus/`. O vault estende os templates base com campos específicos do domínio.
+## Vault Pattern
+Each vault is a separate Git repository that includes arceus-core as a git submodule at `_arceus/`. The vault extends the base templates with domain-specific fields.
 
-## Protocolo MERGE (regra central)
-Ao atualizar uma nota existente com nova informação:
-- NUNCA apagar conteúdo existente
-- NUNCA sobrescrever se a nova info não for mais específica
-- SEMPRE acrescentar a listas (append)
-- SEMPRE preservar informações conflitantes com prefixo `[Variação YYYY-MM-DD | fonte: X]`
-- Incrementar `revision` (antes chamado `schema_version`; notas antigas podem manter o nome até o próximo merge)
-- Registrar mudança em `## History`
+## MERGE Protocol (core rule)
+When updating an existing note with new information:
+- NEVER delete existing content
+- NEVER overwrite unless the new info is more specific
+- ALWAYS append to lists
+- ALWAYS preserve conflicting information with the prefix `[Variation YYYY-MM-DD | source: X]`
+- Increment `revision` (formerly called `schema_version`; old notes may keep the old name until the next merge)
+- Log the change under `## History`
 
-## Língua
-Arceus core: Inglês (agnóstico). Vaults usam a língua do domínio.
+## Language
+Arceus core: English (agnostic). Vaults use the domain's language.
 
 ## Inbox Pattern
 
