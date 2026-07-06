@@ -84,10 +84,13 @@ Every vault based on arceus-core must have a `.claude/settings.json` based on `t
 When creating a new vault:
 1. Copy `templates/claude-settings.json` to `.claude/settings.json`
 2. Replace `VAULT_PATH` with the vault's absolute path (e.g. `/home/user/Repos/vault-my-project`)
+3. Add one `Write`/`Edit` pair per domain note folder (e.g. `Write(VAULT_PATH/components/*.md)`) - the template cannot know them
 
-Principles:
-- Read/Write/Edit are scoped to `VAULT_PATH` only — which already covers `_inbox/` and `_artifacts/`. Never use `Read(*)` — it exposes SSH keys, credentials, and other sensitive system files.
-- The only executable permission beyond read-only inspection and git is `Bash(python3 _arceus/scripts/*)` — the Arceus scripts and nothing else. Do not add broad rules like `Bash(python3 *)`, `Bash(mv *)` or `Bash(cp *)`: file moves inside the vault go through the scripts, and everything else can prompt.
+Principles (least privilege - enable only what each actor actually does):
+- `Read` is the one broad rule (`VAULT_PATH/**`): consulting is the vault's purpose and reading inside the vault is harmless. Never use `Read(*)` - it exposes SSH keys, credentials, and other sensitive system files.
+- `Write`/`Edit` are narrow and per-folder, markdown only. No rule covers `_inbox/` (the user drops files there; the agent only reads and moves them out via script) or non-markdown files anywhere (images, CSVs, PDFs enter through the user). `_artifacts/` is the exception without `.md` restriction - deliverables can be any format.
+- The only executable permission beyond read-only inspection and git is `Bash(python3 _arceus/scripts/*)` - the Arceus scripts and nothing else. Do not add broad rules like `Bash(python3 *)`, `Bash(mv *)` or `Bash(cp *)`: file moves inside the vault go through the scripts, and everything else can prompt.
+- When a legitimate flow starts prompting for approval, allow that specific case - never widen to `Write(VAULT_PATH/**)`.
 
 ## Development Conventions
 - Use `git -C /home/user/Repos/arceus-core` instead of `cd` + git

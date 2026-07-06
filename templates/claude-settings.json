@@ -9,8 +9,16 @@
       "Bash(cat *)",
       "Bash(python3 _arceus/scripts/*)",
       "Read(VAULT_PATH/**)",
-      "Write(VAULT_PATH/**)",
-      "Edit(VAULT_PATH/**)"
+      "Write(VAULT_PATH/*.md)",
+      "Edit(VAULT_PATH/*.md)",
+      "Write(VAULT_PATH/_artifacts/*)",
+      "Edit(VAULT_PATH/_artifacts/*)",
+      "Write(VAULT_PATH/sources/*.md)",
+      "Edit(VAULT_PATH/sources/*.md)",
+      "Write(VAULT_PATH/prompts/*.md)",
+      "Edit(VAULT_PATH/prompts/*.md)",
+      "Write(VAULT_PATH/templates/*.md)",
+      "Edit(VAULT_PATH/templates/*.md)"
     ]
   }
 }

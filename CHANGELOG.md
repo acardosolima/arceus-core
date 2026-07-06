@@ -4,6 +4,14 @@ Each entry documents what changed and — most importantly — the **vault migra
 
 The version at the top of this file is the source of truth for releases: the GitHub Action tags `v<version>` automatically when a push to the main branch carries a new top version here. To release, add an entry — never tag by hand.
 
+## 0.3.1 - 2026-07-06
+
+### Changed
+- `templates/claude-settings.json` now follows least privilege: `Write`/`Edit` are per-folder and markdown-only instead of `VAULT_PATH/**` (broad `Read` stays - consulting is the vault's purpose). No rule covers `_inbox/` (user territory; the agent moves files out via script) or non-markdown files (they enter through the user); `_artifacts/` keeps any-format Write/Edit for deliverables. New-vault setup gains step 3: add one Write/Edit pair per domain note folder.
+
+### Vault migration
+- Vaults created from the old template: narrow `Write(VAULT_PATH/**)` / `Edit(VAULT_PATH/**)` in `.claude/settings.json` to the per-folder rules of the new template, adding a pair per domain note folder. Vaults that already hand-tightened their settings (the new template mirrors vault-hercules) need nothing.
+
 ## 0.3.0 - 2026-07-06
 
 ### Added
