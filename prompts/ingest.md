@@ -10,6 +10,11 @@ Use this workflow to process a raw file from `_inbox/` into vault notes.
 
 1. **Read** the file from `_inbox/`
 2. **Identify** what kind of source it is (meeting transcript, export, document, chat log, etc.)
+   - Cumulative chat export (WhatsApp exports always contain the full history): find the most recent previous export of the same chat in `sources/`, then cut the delta and extract knowledge from the delta only:
+     ```
+     python3 _arceus/scripts/whatsapp_delta.py "_inbox/<new export>" --previous "sources/<previous export>" --output "_artifacts/<chat>-delta.txt"
+     ```
+     The full new export still goes through `ingest_move.py` in step 5 - it becomes the base for the next delta. If the script errors (anchor not found), ingest the full file instead.
 3. **Decide** whether to create new notes or merge into existing ones:
    - New entity not in the vault → scaffold with the script, then fill following `prompts/extract.md`:
      ```

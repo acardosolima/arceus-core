@@ -4,6 +4,14 @@ Each entry documents what changed and — most importantly — the **vault migra
 
 The version at the top of this file is the source of truth for releases: the GitHub Action tags `v<version>` automatically when a push to the main branch carries a new top version here. To release, add an entry — never tag by hand.
 
+## 0.3.0 - 2026-07-06
+
+### Added
+- `scripts/whatsapp_delta.py` - cut the new-message delta from a cumulative WhatsApp chat export. WhatsApp only exports the full history, so every new export repeats what was already ingested; the script anchors on the previously ingested export (matching messages by timestamp + sender, never by text, which changes between exports) and emits only the new messages, verbatim. `prompts/ingest.md` gained the corresponding sub-step: extract knowledge from the delta only, then move the full new export to `sources/` as the next diff base.
+
+### Vault migration
+None.
+
 ## 0.2.0 - 2026-07-03
 
 ### Added

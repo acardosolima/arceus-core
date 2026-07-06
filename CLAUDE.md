@@ -60,6 +60,7 @@ Routine mechanical actions must not depend on an LLM. The LLM decides *what* (wh
 
 - `python3 _arceus/scripts/new_note.py <folder> "<Title>" --prefix <PREFIX>` — scaffold a note from the template with the next free ID (never invent IDs manually)
 - `python3 _arceus/scripts/ingest_move.py "_inbox/<file>" "<description>" --type "<source type>" --notes "<IDs>"` — canonical rename, move to `sources/`, log row in `sources/_log.md`
+- `python3 _arceus/scripts/whatsapp_delta.py <new_export> --previous <old_export> [--output <file>]` - cut the new-message delta from a cumulative WhatsApp chat export, anchored on the previously ingested export of the same chat
 - `python3 _arceus/scripts/validate.py` — frontmatter lint for the whole vault; run before committing note changes
 
 Scripts are Python stdlib-only (no pip, no venv) and resolve paths from the current working directory — run them from the vault root.
